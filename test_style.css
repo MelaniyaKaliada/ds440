@@ -178,3 +178,8 @@ body.mri-page button {
 body.mri-page button:hover {
     background-color: #45a049;
 }
+
+body.mri-page main {
+    margin-left: 20px;
+    padding: 20px;
+}
