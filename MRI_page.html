@@ -44,9 +44,6 @@
     <main>
         <div class="container">
             <h2>Submit MRI & Patient Data</h2>
-    <form id="mriForm" action="http://127.0.0.1:5000/submit" method="POST" enctype="multipart/form-data">
-
-        <!-- Gender (Dropdown) -->
         <label for="gender">Gender:</label>
         <select id="gender" name="gender" required>
             <option value="">Select Gender</option>
@@ -54,15 +51,12 @@
             <option value="female">Female</option>
         </select>
 
-        <!-- Age (Discrete Number) -->
         <label for="age">Age:</label>
         <input type="number" id="age" name="age" min="1" max="120" step="1" required>
 
-        <!-- Total Years of Education -->
         <label for="education">Total Years of Education (starting from elementary school):</label>
         <input type="number" id="education" name="education" min="0" max="50" step="1" required>
 
-        <!-- Socioeconomic Status (Dropdown) -->
         <label for="ses">SES (Socioeconomic Status):</label>
         <select id="ses" name="ses" required>
             <option value="">Select SES</option>
@@ -73,31 +67,24 @@
             <option value="5">Highest SES</option>
         </select>
 
-        <!-- MMSE Score -->
         <label for="mmse">MMSE Score:</label>
         <input type="number" id="mmse" name="mmse" min="0" max="30" step="1" required>
 
-        <!-- CDR Score -->
         <label for="cdr">CDR Score:</label>
         <input type="number" id="cdr" name="cdr" min="0" max="3" step="0.5" required>
 
-        <!-- eTIV Value -->
         <label for="etiv">eTIV (Estimated Total Intracranial Volume):</label>
         <input type="number" id="etiv" name="etiv" min="1000" max="2500" step="1" required>
 
-        <!-- nWBV Value -->
         <label for="nwbv">nWBV (Normalized Whole Brain Volume):</label>
         <input type="number" id="nwbv" name="nwbv" min="0.5" max="1" step="0.01" required>
 
-        <!-- ASF Value -->
         <label for="asf">ASF (Atlas Scaling Factor):</label>
         <input type="number" id="asf" name="asf" min="0.5" max="2" step="0.01" required>
 
-        <!-- Upload MRI File -->
         <label for="file">Upload MRI (DICOM):</label>
         <input type="file" id="file" name="file" accept=".dcm" required>
 
-        <!-- Submit Button -->
         <button type="submit">Submit</button>
     </form>
 
