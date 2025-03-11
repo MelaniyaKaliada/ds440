@@ -183,3 +183,17 @@ body.mri-page main {
     margin-left: 20px;
     padding: 20px;
 }
+
+
+body.mri-page form label {
+    display: block;
+    margin-bottom: 2px;
+}
+
+body.mri-page form input,
+body.mri-page form select {
+    display: block;
+    margin-bottom: 15px;
+    width: 100%;
+    max-width: 300px;
+}

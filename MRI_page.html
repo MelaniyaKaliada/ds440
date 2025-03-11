@@ -44,49 +44,50 @@
     <main>
         <div class="container">
             <h2>Submit MRI & Patient Data</h2>
-        <label for="gender">Gender:</label>
-        <select id="gender" name="gender" required>
-            <option value="">Select Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-        </select>
+            <form id="mriForm" action="http://127.0.0.1:5000/submit" method="POST" enctype="multipart/form-data">
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
 
-        <label for="age">Age:</label>
-        <input type="number" id="age" name="age" min="1" max="120" step="1" required>
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" min="1" max="120" step="1" required>
 
-        <label for="education">Total Years of Education (starting from elementary school):</label>
-        <input type="number" id="education" name="education" min="0" max="50" step="1" required>
+                <label for="education">Total Years of Education (starting from elementary school):</label>
+                <input type="number" id="education" name="education" min="0" max="50" step="1" required>
 
-        <label for="ses">SES (Socioeconomic Status):</label>
-        <select id="ses" name="ses" required>
-            <option value="">Select SES</option>
-            <option value="1">Lowest SES</option>
-            <option value="2">Lower-middle SES</option>
-            <option value="3">Middle SES</option>
-            <option value="4">Upper-middle SES</option>
-            <option value="5">Highest SES</option>
-        </select>
+                <label for="ses">SES (Socioeconomic Status):</label>
+                <select id="ses" name="ses" required>
+                    <option value="">Select SES</option>
+                    <option value="1">Lowest SES</option>
+                    <option value="2">Lower-middle SES</option>
+                    <option value="3">Middle SES</option>
+                    <option value="4">Upper-middle SES</option>
+                    <option value="5">Highest SES</option>
+                </select>
 
-        <label for="mmse">MMSE Score:</label>
-        <input type="number" id="mmse" name="mmse" min="0" max="30" step="1" required>
+                <label for="mmse">MMSE Score:</label>
+                <input type="number" id="mmse" name="mmse" min="0" max="30" step="1" required>
 
-        <label for="cdr">CDR Score:</label>
-        <input type="number" id="cdr" name="cdr" min="0" max="3" step="0.5" required>
+                <label for="cdr">CDR Score:</label>
+                <input type="number" id="cdr" name="cdr" min="0" max="3" step="0.5" required>
 
-        <label for="etiv">eTIV (Estimated Total Intracranial Volume):</label>
-        <input type="number" id="etiv" name="etiv" min="1000" max="2500" step="1" required>
+                <label for="etiv">eTIV (Estimated Total Intracranial Volume):</label>
+                <input type="number" id="etiv" name="etiv" min="1000" max="2500" step="1" required>
 
-        <label for="nwbv">nWBV (Normalized Whole Brain Volume):</label>
-        <input type="number" id="nwbv" name="nwbv" min="0.5" max="1" step="0.01" required>
+                <label for="nwbv">nWBV (Normalized Whole Brain Volume):</label>
+                <input type="number" id="nwbv" name="nwbv" min="0.5" max="1" step="0.01" required>
 
-        <label for="asf">ASF (Atlas Scaling Factor):</label>
-        <input type="number" id="asf" name="asf" min="0.5" max="2" step="0.01" required>
+                <label for="asf">ASF (Atlas Scaling Factor):</label>
+                <input type="number" id="asf" name="asf" min="0.5" max="2" step="0.01" required>
 
-        <label for="file">Upload MRI (DICOM):</label>
-        <input type="file" id="file" name="file" accept=".dcm" required>
+                <label for="file">Upload MRI (DICOM):</label>
+                <input type="file" id="file" name="file" accept=".dcm" required>
 
-        <button type="submit">Submit</button>
-    </form>
+                <button type="submit">Submit</button>
+            </form>
 
         </div>
     </main>
