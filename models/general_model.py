@@ -4,8 +4,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
 import pickle
 
 
@@ -14,60 +12,6 @@ data = pd.read_csv("C:\\Users\\00000\\PycharmProjects\\ds440\\data\\alzheimers_p
 X = data.drop("Alzheimer", axis=1)
 y = data["Alzheimer"]
 X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8, random_state=50)
-
-# label_encoder_cols = ["Diabetes", "Family History","Urban vs Rural Living"]
-#
-# ordinal_cols = ["Air Pollution Exposure", "Social Engagement Level", "Stress Levels"]
-#
-# sleep = ["Sleep Quality"]
-#
-# one_hot_cols = ["Smoking Status", "Alcohol Consumption", "Dietary Habits", "Employment Status"]
-#
-# le_alzheimer = LabelEncoder()
-# y_train = le_alzheimer.fit_transform(y_train)
-# y_test = le_alzheimer.transform(y_test)
-#
-# label_transformer = Pipeline(steps=[('label_enc', LabelEncoder())])
-#
-# onehot_transformer = Pipeline(steps=[('onehot', OneHotEncoder(drop='first', handle_unknown='ignore'))])
-#
-# ordinal_transformer = Pipeline(steps=[('ordinal', OrdinalEncoder(categories=[["Low", "Medium", "High"]]))])
-# sleep_transformer = Pipeline(steps=[('sleep', OrdinalEncoder(categories=[["Poor", "Average", "Good"]]))])
-#
-#
-# preprocessor = ColumnTransformer(
-#     transformers=[
-#         ('label', label_transformer, label_encoder_cols),
-#         ('ordinal', ordinal_transformer, ordinal_cols),
-#         ('onehot', onehot_transformer, one_hot_cols),
-#         ('sleep', sleep_transformer, sleep)
-#     ])
-#
-# model_pipeline = Pipeline(steps=[
-#     ('preprocessor', preprocessor),
-#     ('classifier', RandomForestClassifier(random_state=50, criterion="entropy", max_depth=10, max_features="sqrt", min_samples_leaf=4, min_samples_split=10, n_estimators=300))
-# ])
-#
-# columns_to_keep = ["Age", "Family History", "Employment Status_Retired", "Diabetes", "Smoking Status_Former",
-#     "Smoking Status_Never", "Stress Levels", "Social Engagement Level", "Air Pollution Exposure","Alcohol Consumption_Occasionally",
-#     "Dietary Habits_Unhealthy", "Sleep Quality", "Education Level", "Urban vs Rural Living"]
-#
-# X_train = X_train[columns_to_keep]
-# X_test = X_test[columns_to_keep]
-#
-# model_pipeline.fit(X_train, y_train)
-#
-#
-#
-# # Make predictions on the test set
-# y_pred = model_pipeline.predict(X_test)
-#
-# # Evaluate the model
-# from sklearn.metrics import classification_report
-# print("Classification Report:")
-# print(classification_report(y_test, y_pred))
-
-
 
 # LabelEncoder
 le_gender = LabelEncoder()
@@ -102,22 +46,6 @@ le_alzheimer = LabelEncoder()
 y_train = le_alzheimer.fit_transform(y_train)
 y_test = le_alzheimer.transform(y_test)
 
-# OrdinalEncoder
-
-# "Depression Level","Income Level",
-
-# ordinal_cols = ["Physical Activity Level", "Air Pollution Exposure", "Social Engagement Level", "Stress Levels"]
-# level_order = [["Low", "Medium", "High"]]  * len(ordinal_cols)
-# enc = OrdinalEncoder(categories=level_order)
-#
-# X_train[ordinal_cols] = enc.fit_transform(X_train[ordinal_cols])
-# X_test[ordinal_cols] = enc.transform(X_test[ordinal_cols])
-# X_train["Physical Activity Level"] = enc.fit_transform(X_train[["Physical Activity Level"]])
-# X_test["Physical Activity Level"] = enc.transform(X_test[["Physical Activity Level"]])
-#
-# X_train["Depression Level"] = enc.fit_transform(X_train[["Depression Level"]])
-# X_test["Depression Level"] = enc.transform(X_test[["Depression Level"]])
-#
 level_order = [["Low", "Medium", "High"]]
 air_enc = OrdinalEncoder(categories=level_order)
 social_enc = OrdinalEncoder(categories=level_order)
@@ -128,10 +56,7 @@ X_test["Air Pollution Exposure"] = air_enc.transform(X_test[["Air Pollution Expo
 
 X_train["Social Engagement Level"] = social_enc.fit_transform(X_train[["Social Engagement Level"]])
 X_test["Social Engagement Level"] = social_enc.transform(X_test[["Social Engagement Level"]])
-#
-# X_train["Income Level"] = enc.fit_transform(X_train[["Income Level"]])
-# X_test["Income Level"] = enc.transform(X_test[["Income Level"]])
-#
+
 X_train["Stress Levels"] = stress_enc.fit_transform(X_train[["Stress Levels"]])
 X_test["Stress Levels"] = stress_enc.transform(X_test[["Stress Levels"]])
 
@@ -195,11 +120,6 @@ columns_to_drop = ["Smoking Status", "Alcohol Consumption", "Dietary Habits", "M
 X_train = X_train.drop(columns=columns_to_drop)
 X_test = X_test.drop(columns=columns_to_drop)
 
-# numerical_cols = ["Age", "BMI", "Cognitive Test Score"]
-# scaler = StandardScaler()
-# X_train[numerical_cols] = scaler.fit_transform(X_train[numerical_cols])
-# X_test[numerical_cols] = scaler.transform(X_test[numerical_cols])
-
 X_train = X_train.drop(["Country"], axis=1)
 X_test = X_test.drop(["Country"], axis=1)
 
@@ -236,6 +156,6 @@ gen_model_data = {
         "Employment Status": enc_employment
     }}
 
-# with open("models/general_model.pkl", "wb") as f:
-#     pickle.dump(gen_model_data, f)
+with open("models/general_model.pkl", "wb") as f:
+    pickle.dump(gen_model_data, f)
 
