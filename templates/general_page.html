@@ -144,11 +144,11 @@
                 {% if prediction is not none %}
                     <h3 class="prediction-general">
                         {% if prediction == 1 %}
-                            You have a high chance of having Alzheimer's. Please visit a doctor.
+                            Prediction: You have a high chance of having Alzheimer's. Please visit a doctor.
                         {% elif prediction == 0 %}
                             You have a high chance of not having Alzheimer's. No need to worry.
                         {% else %}
-                            The model could not determine the prediction.
+                            Prediction
                         {% endif %}
                     </h3>
                 {% endif %}

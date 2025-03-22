@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request
 import pickle
-import numpy as np
 import pandas as pd
 app = Flask(__name__)
 
@@ -8,15 +7,43 @@ with open("models/general_model.pkl", "rb") as f:
     general_model_data = pickle.load(f)
 
 general_model = general_model_data["model"]
-encoders = general_model_data["encoders"]
+general_encoders = general_model_data["encoders"]
+
+with open("models/mri_model.pkl", "rb") as f:
+    mri_model_data = pickle.load(f)
+
+mri_model = mri_model_data["model"]
+mri_encoder = mri_model_data["encoder"]
 
 @app.route('/')
 def home():
     return render_template("Homepage.html")
 
-@app.route('/mri')
+@app.route('/mri', methods=['GET', 'POST'])
 def mri_page():
-    return render_template("MRI_page.html")
+    if request.method == 'GET':
+        return (render_template("MRI_page.html"))
+
+    if request.method == 'POST':
+        form_data = {
+            "M/F": request.form["gender"],
+            "Age": int(request.form["age"]),
+            "EDUC": int(request.form["education"]),
+            "SES": request.form["ses"],
+            "MMSE": int(request.form["mmse"]),
+            "eTIV": int(request.form["etiv"]),
+            "nWBV": float(request.form["nwbv"]),
+            "ASF": float(request.form["asf"]),
+            "CDR": float(request.form["cdr"])
+        }
+
+        input_df = pd.DataFrame([form_data])
+
+        # Label encoding
+        input_df["M/F"] = mri_encoder.transform(input_df[["M/F"]])
+        pred = mri_model.predict(input_df)[0]
+
+        return render_template("MRI_page.html", prediction=pred)
 @app.route('/general', methods=['GET', 'POST'])
 def general_page():
     if request.method == 'GET':
@@ -41,21 +68,21 @@ def general_page():
 
         input_df = pd.DataFrame([form_data])
 
-        # Apply Label Encoding
+        # Label encoding
         label_cols = ["Diabetes", "Family History", "Urban vs Rural Living"]
         for col in label_cols:
-            input_df[col] = encoders[col].transform(input_df[[col]])
+            input_df[col] = general_encoders[col].transform(input_df[[col]])
 
         ordinal_cols = ["Air Pollution Exposure", "Social Engagement Level", "Stress Levels"]
         for col in ordinal_cols:
-            input_df[col] = encoders[col].transform(input_df[[col]])
+            input_df[col] = general_encoders[col].transform(input_df[[col]])
 
-        input_df["Sleep Quality"] = encoders["Sleep Quality"].transform(input_df[["Sleep Quality"]])
+        input_df["Sleep Quality"] = general_encoders["Sleep Quality"].transform(input_df[["Sleep Quality"]])
 
         onehotenc_cols = ["Smoking Status", "Alcohol Consumption", "Dietary Habits", "Employment Status"]
         for col in onehotenc_cols:
-            enc_cols = encoders[col].transform(input_df[[col]])
-            enc_df = pd.DataFrame(enc_cols, columns=encoders[col].get_feature_names_out([col]))
+            enc_cols = general_encoders[col].transform(input_df[[col]])
+            enc_df = pd.DataFrame(enc_cols, columns=general_encoders[col].get_feature_names_out([col]))
             enc_df.index = input_df.index
             input_df = input_df.drop(col, axis=1)
             input_df = pd.concat([input_df, enc_df], axis=1)
@@ -69,7 +96,7 @@ def general_page():
 
         return render_template("general_page.html", prediction=pred)
 
-@app.route('/handwriting')
+@app.route('/handwriting', methods=['GET', 'POST'])
 def handwriting_page():
     return render_template("Handwriting_page.html")
 
