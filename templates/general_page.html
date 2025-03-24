@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>ClearMind</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='test_style.css') }}">
     <script type="text/javascript" src="{{ url_for('static', filename='test.js') }}" defer></script>
 </head>
@@ -146,15 +146,11 @@
                         {% if prediction == 1 %}
                             Prediction: You have a high chance of having Alzheimer's. Please visit a doctor.
                         {% elif prediction == 0 %}
-                            You have a high chance of not having Alzheimer's. No need to worry.
+                            Prediction: You have a high chance of not having Alzheimer's. No need to worry.
                         {% else %}
-                            Prediction
+                            Prediction:
                         {% endif %}
                     </h3>
-                {% endif %}
-
-                {% if error %}
-                    <p style="color: red;">{{ error }}</p>
                 {% endif %}
             </div>
         </div>

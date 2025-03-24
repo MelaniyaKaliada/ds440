@@ -215,3 +215,20 @@ body.general_page form select {
     padding: 10px;
     border-radius: 5px;
 }
+
+#homepage .container {
+    padding: 40px;
+}
+
+#homepage h1 {
+    margin-bottom: 20px;
+}
+
+#homepage h2 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+#homepage p {
+    margin-bottom: 25px;
+}
