@@ -135,8 +135,7 @@ rf_model = RandomForestClassifier(random_state=50, criterion="entropy", max_dept
 rf_model.fit(X_train, y_train)
 rf_pred = rf_model.predict(X_test)
 rf_accuracy = rf_model.score(X_test, y_test)
-print(f"Random Forest Accuracy: {rf_accuracy:.4f}")
-print("Random Forest Classification Report:")
+print(f"Random Forest Accuracy:", rf_accuracy)
 print(classification_report(y_test, rf_pred))
 
 
