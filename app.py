@@ -1,15 +1,21 @@
 from flask import Flask, render_template, request
 import pickle
 import pandas as pd
+import os
+from db_utils import log_general_prediction, log_mri_prediction
 app = Flask(__name__)
 
-with open("models/general_model.pkl", "rb") as f:
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+mri_model_path = os.path.join(BASE_DIR, 'models', 'mri_model.pkl')
+general_model_path = os.path.join(BASE_DIR, 'models', 'general_model.pkl')
+
+with open(general_model_path, "rb") as f:
     general_model_data = pickle.load(f)
 
 general_model = general_model_data["model"]
 general_encoders = general_model_data["encoders"]
 
-with open("models/mri_model.pkl", "rb") as f:
+with open(mri_model_path, "rb") as f:
     mri_model_data = pickle.load(f)
 
 mri_model = mri_model_data["model"]
@@ -42,6 +48,7 @@ def mri_page():
         # Label encoding
         input_df["M/F"] = mri_encoder.transform(input_df[["M/F"]])
         pred = mri_model.predict(input_df)[0]
+        log_mri_prediction(form_data, pred)
 
         return render_template("MRI_page.html", prediction=pred)
 @app.route('/general', methods=['GET', 'POST'])
@@ -93,6 +100,7 @@ def general_page():
         input_df = input_df[columns_to_keep]
 
         pred = general_model.predict(input_df)[0]
+        log_general_prediction(form_data, pred)
 
         return render_template("general_page.html", prediction=pred)
 
